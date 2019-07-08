@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import AbstractBaseUser, AbstractUser, UserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
 
@@ -8,7 +8,7 @@ from django.contrib.auth.models import BaseUserManager
 class UserProfileManager(BaseUserManager):
     """Helps django work with our custom model"""
 
-    # Tells django how to create user from our Userprofile
+    # tells django how to create user from our Userprofile
     def create_user(self, email, name, password):
         """Creates a new user profile object"""
 
@@ -32,9 +32,9 @@ class UserProfileManager(BaseUserManager):
         return user
 
     # How to create a super user
-    def create_super_user(self, email, name, password):
+    def create_superuser(self, email, name, password):
         """Creates and saves a super user with given details"""
-        user = self.create_user(self, email, name, password)
+        user = self.create_user(email, name, password)
 
         # assign 2 vars to the user, set is_super_user and is_staff to true
         user.is_superuser = True
