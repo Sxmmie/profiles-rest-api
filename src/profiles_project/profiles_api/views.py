@@ -5,9 +5,11 @@ from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.authentication import TokenAuthentication
 
 from . import serializers
 from . import models
+from . import permissions
 
 
 # Create your views here.
@@ -127,3 +129,9 @@ class UserProfileViewSet(viewsets.ModelViewSet):
 
     # queryset tells the viewset how to retrieve the object from database
     queryset = models.UserProfile.objects.all()  # list out all objects
+
+    # token auth - A tuple contains all authentication types to be used for API auth.
+    authentication_classes = (TokenAuthentication,)
+
+    # permission classes to be applied to UserProfileViewSet
+    permission_classes = (permissions.UpdateOwnProfile,)
