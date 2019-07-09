@@ -10,6 +10,8 @@ router = DefaultRouter()
 
 # register a new url with the router than points to the HelloViewSet
 router.register('hello-viewset', views.HelloViewSet, base_name='hello-viewset')
+# register viewset with a url
+router.register('profile', views.UserProfileViewSet)
 
 
 # url-dispatcher
