@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
+from rest_framework import filters
 
 from . import serializers
 from . import models
@@ -135,3 +136,8 @@ class UserProfileViewSet(viewsets.ModelViewSet):
 
     # permission classes to be applied to UserProfileViewSet
     permission_classes = (permissions.UpdateOwnProfile,)
+
+    # tell the filters we want to use
+    filter_backend = (filters.SearchFilter,)
+    # allow users filter by name and email fields
+    search_fields = ('name', 'email',)
