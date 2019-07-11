@@ -83,14 +83,16 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
 
 
 class ProfileFeedItem(models.Model):
-    """Profile status  update"""
+    """Profile status update (used to store all users profile status update)"""
 
     # field that points to the user profile this update corresponds to.
     # Foreign key creates a link from a=ne model to another model in the database.
     user_profile = models.ForeignKey("UserProfile", on_delete=models.CASCADE)
+    # store text user adds to status
     status_text = models.CharField(max_length=255)
     created_on = models.DateTimeField(auto_now_add=True)
 
+    # helps python convert model to objects
     def __str__(self):
         """Return the model as string"""
         return self.status_text

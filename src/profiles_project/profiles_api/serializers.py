@@ -35,3 +35,15 @@ class UserProfileSerializer(serializers.ModelSerializer):
         user.save()
 
         return user
+
+
+class ProfileFeedSerializer(serializers.ModelSerializer):
+    """A serializer for profile feed items"""
+
+    class Meta:
+        """tells django what field to take from our model"""
+        model = models.ProfileFeedItem
+        fields = ('id', 'user_profile', 'status_text', 'created_on')
+        # set user_profile as read only automatically, so a user can't create feeds for other users.
+        # create a profile feed item for the currently logged in user.
+        extra_kwargs = {'user_profile': {'read_only': True}}

@@ -9,6 +9,8 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework import filters
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.authtoken.views import ObtainAuthToken
+# user can do anythin if authenticated and restricts them to only read only access if not
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 
 from . import serializers
 from . import models
@@ -157,3 +159,24 @@ class LoginViewSet(viewsets.ViewSet):
         """Use the ObtainAuthToken APIVIew to validate and create a token"""
         # pass request through to the ObtainAuthToken APIView and called the post function
         return ObtainAuthToken().post(request)
+
+
+class UserProfileFeedViewSet(viewsets.ModelViewSet):
+    """Handles creating, reading and updating profile feed items"""
+
+    authentication_classes = (TokenAuthentication,)
+    serializer_class = serializers.ProfileFeedSerializer
+    queryset = models.ProfileFeedItem.objects.all()
+    # logged in user can only create or modify their own status.
+    permissions_classes = (permissions.PostOwnStatus,
+                           IsAuthenticated)
+
+    # function to customize the logic that is run when we create a new object through the viewset.
+    # make sure the user_profile of the ProfileFeedItem is set to the currently logged in user
+    def perform_create(self, serializer):
+        """Sets the user_profile to the logged in user"""
+
+        # when rest framework creates a new object with the viewset, it will call this method,
+        # and pass on the validated serializer. The serialize is used to create a new object, but
+        # when object created, manually set the user profile to the profile that is logged in.
+        serializer.save(user_profile=self.request.user)
