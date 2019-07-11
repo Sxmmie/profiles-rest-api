@@ -14,7 +14,7 @@ router.register('hello-viewset', views.HelloViewSet, base_name='hello-viewset')
 router.register('profile', views.UserProfileViewSet)
 router.register('login', views.LoginViewSet, base_name='login')
 # no need for base_name because it's a model viewset
-router.register('feed', views.UserProfileViewSet)
+router.register('feed', views.UserProfileFeedViewSet)
 
 
 # url-dispatcher

@@ -127,9 +127,10 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     """Handles creating, and updating profiles"""
 
     # ModelViewSet is provided by django rest framework that handles the logic
-    # for creating,reading and updating models items
+    # for creating, reading and updating models items
 
     # serialize knows which model to look for, for handling user objects, because it has the model class set in the Meta (views) data.
+    # list out all objects in the database
     serializer_class = serializers.UserProfileSerializer
 
     # queryset tells the viewset how to retrieve the object from database

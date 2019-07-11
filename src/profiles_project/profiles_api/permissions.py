@@ -25,7 +25,7 @@ class PostOwnStatus(permissions.BasePermission):
 
     # check if user has permissions to perform this action
     def has_object_permission(self, request, view, obj):
-        """check user us trying to edit their own status and not other people's status"""
+        """check user us trying to edit their own status and not other people's status (user can only view another user status but can't modify it or create a status for another user"""
         if request.method in permissions.SAFE_METHODS:
             return True
 
